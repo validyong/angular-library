@@ -1,1 +1,72 @@
-<p>book-list works!</p>
+<div class="list row">
+    <div class="col-md-8">
+        <div class="input-group mb-3">
+            <input
+                type="text"
+                class="form-control"
+                placeholder="Search by Book Name"
+                [(ngModel)]="bookName"
+            />
+            <div class="input-group-append">
+                <button
+                    class="btn btn-outline-secondary"
+                    type="button"
+                    (click)="searchBookName()"
+                >
+                Search
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <h4>Books List</h4>
+        <ul class="list-group">
+            <li
+                class="list-group-item"
+                *ngFor="let book of books; let i = index"
+                [class.active]="i == currentIndex"
+                (click)="setActiveBook(book, i)"
+            >
+            {{ book.bookName }}
+            </li>
+        </ul>
+
+        <button class="m-3 btn btn-sm btn-danger" (click)="removeAllBooks()">
+            Remove All
+        </button>
+    </div>
+    <div class="col-md-6">
+        <div *ngIf="currentBook">
+            <h4>Book</h4>
+            <div>
+                <label><strong>ISBN:</strong></label>
+                {{ currentBook.isbn }}
+            </div>
+            <div>
+                <label><strong>Book Name:</strong></label>
+                {{ currentBook.bookName }}
+            </div>
+            <div>
+                <label><strong>Company:</strong></label>
+                {{ currentBook.company }}
+            </div>
+            <div>
+                <label><strong>Price:</strong></label>
+                {{ currentBook.price }}
+            </div>
+            <div>
+                <label><strong>Genre Code:</strong></label>
+                {{ currentBook.genreCode }}
+            </div>
+
+            <a class="badge badge-warning" routerLink="/books/{{ currentBook.isbn }}">
+                Edit
+            </a>
+        </div>
+
+        <div *ngIf="!currentBook">
+            <br />
+            <p> click on a Book</p>
+        </div>
+    </div>
+</div>
