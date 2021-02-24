@@ -1,0 +1,10 @@
+<mat-sidenav-container class='app-side-nav-container' fullscreen>
+    <mat-sidenav #sidenav mode="side">
+        side-nav
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <button mat-button (click)="sidenav.toggle()">
+            Main content
+        </button>
+    </mat-sidenav-content>
+</mat-sidenav-container>
