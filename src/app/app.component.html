@@ -1,6 +1,6 @@
 <div class="app-wrapper">
-  <app-side-nav></app-side-nav>
-  <app-toolbar></app-toolbar>
+  <app-side-nav [sidenavLayout]="openMenu"></app-side-nav>
+  <app-toolbar (sidenavToggle)="clickMenu()"></app-toolbar>
   <mat-toolbar color="primary">
     <button mat-icon-button>
       <mat-icon></mat-icon>

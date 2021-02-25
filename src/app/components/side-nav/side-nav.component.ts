@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { SideNavService } from 'src/app/services/side-nav.service';
 
@@ -11,10 +11,12 @@ export class SideNavComponent implements OnInit {
   @ViewChild('sidenav')
   public sidenav!: MatSidenav;
 
+  @Input() sidenavLayout: any;
+
   constructor(private sideNavService: SideNavService) { }
 
   ngOnInit() {
-    this.sideNavService.sideNavToggleSubject.subscribe( () => {
+    this.sideNavService.sideNavToggleSubject.subscribe(() => {
       this.sidenav.toggle();
     });
   }

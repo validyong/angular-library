@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { SideNavService } from 'src/app/services/side-nav.service';
 
 @Component({
@@ -8,11 +8,16 @@ import { SideNavService } from 'src/app/services/side-nav.service';
 })
 export class ToolbarComponent implements OnInit {
   title: string = "The library";
+  @Output () sidenavToggle = new EventEmitter<void>();
 
   constructor(private sideNavService: SideNavService) { }
 
   clickMenu() {
-    this.sideNavService.toggle();
+    this.sidenavToggle.emit();
+  }
+
+  onToggleSidenav() {
+    this.sidenavToggle.emit();
   }
 
   ngOnInit(): void {

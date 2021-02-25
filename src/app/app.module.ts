@@ -19,6 +19,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { SideNavComponent } from './components/side-nav/side-nav.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 
+import { SideNavService } from './services/side-nav.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,7 +42,13 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component';
     MatButtonModule,
     MatIconModule
   ],
-  providers: [],
+  exports: [
+    ToolbarComponent,
+    SideNavComponent
+  ],
+  providers: [
+    SideNavService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
