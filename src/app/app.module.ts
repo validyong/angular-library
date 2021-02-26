@@ -25,6 +25,8 @@ import { SideNavComponent } from './components/side-nav/side-nav.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 
 import { SideNavService } from './services/side-nav.service';
+import { DeleteBookComponent } from './components/delete-book/delete-book.component';
+import { EditBookComponent } from './components/edit-book/edit-book.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,9 @@ import { SideNavService } from './services/side-nav.service';
     BookDetailsComponent,
     BookListComponent,
     SideNavComponent,
-    ToolbarComponent
+    ToolbarComponent,
+    DeleteBookComponent,
+    EditBookComponent
   ],
   imports: [
     BrowserModule,
