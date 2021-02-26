@@ -7,10 +7,11 @@ import { AddBookComponent } from './components/add-book/add-book.component';
 import { BookDetailsComponent } from './components/book-details/book-details.component';
 import { BookListComponent } from './components/book-list/book-list.component';
 
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { MatInputModule } from '@angular/material/input';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
@@ -43,8 +44,10 @@ import { EditBookComponent } from './components/edit-book/edit-book.component';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    MatInputModule,
     MatToolbarModule,
     MatSidenavModule,
     MatListModule,
@@ -57,7 +60,8 @@ import { EditBookComponent } from './components/edit-book/edit-book.component';
   ],
   exports: [
     ToolbarComponent,
-    SideNavComponent
+    SideNavComponent,
+    MatInputModule,
   ],
   providers: [
     SideNavService

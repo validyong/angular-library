@@ -1,19 +1,20 @@
+<div class="form">
+    <mat-form-field floatPlaceholder="never" color="accent">
+        <input matInput #filter placeholder="Filter book">
+    </mat-form-field>
+</div>
+
+<mat-table #table [dataSource]="dataSource!" matSort class="mat-cell">
+
+</mat-table>
+
 <div class="list row">
     <div class="col-md-8">
         <div class="input-group mb-3">
-            <input
-                type="text"
-                class="form-control"
-                placeholder="Search by Book Name"
-                [(ngModel)]="bookName"
-            />
+            <input type="text" class="form-control" placeholder="Search by Book Name" [(ngModel)]="bookName" />
             <div class="input-group-append">
-                <button
-                    class="btn btn-outline-secondary"
-                    type="button"
-                    (click)="searchBookName()"
-                >
-                Search
+                <button class="btn btn-outline-secondary" type="button" (click)="searchBookName()">
+                    Search
                 </button>
             </div>
         </div>
@@ -21,13 +22,9 @@
     <div class="col-md-6">
         <h4>Books List</h4>
         <ul class="list-group">
-            <li
-                class="list-group-item"
-                *ngFor="let book of books; let i = index"
-                [class.active]="i == currentIndex"
-                (click)="setActiveBook(book, i)"
-            >
-            {{ book.bookName }}
+            <li class="list-group-item" *ngFor="let book of books; let i = index" [class.active]="i == currentIndex"
+                (click)="setActiveBook(book, i)">
+                {{ book.bookName }}
             </li>
         </ul>
 

@@ -7,6 +7,7 @@ ng g c components/book-details
 ng g c components/books-list
 
 ng g class models/book --type=model
+ng g class models/example-data-source
 
 ng add @angular/material
 
@@ -19,3 +20,4 @@ ng g c components/side-nav
 ng g c components/toolbar
 ```
 
+[the file](https://stackblitz.com/edit/angular-9-material-mattable-crud?file=src%2Fapp%2Fapp.component.ts)
