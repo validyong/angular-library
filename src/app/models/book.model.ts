@@ -1,5 +1,5 @@
 export class Book {
-    isbn?: string;
+    isbn: string | undefined;
     bookName?: string;
     company?: string;
     price?: number;

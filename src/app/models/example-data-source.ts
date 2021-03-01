@@ -43,9 +43,18 @@ export class ExampleDataSource extends DataSource<Book> {
         this._exampleDatabase.getAllBooks();
 
         return merge(...displayDataChanges).pipe(map(() => {
+            console.log("merge");
+
             this.filteredData = this._exampleDatabase.data.slice()
                 .filter((book: Book) => {
-                    const searchStr = (book.isbn! + book.bookName! + book.company! + book.price! + book.genreCode!)
+                    if (!book) {
+                        console.log("undefined???");
+                        return;
+
+                    } else {
+                        console.log("undefined!!!")
+                    }
+                    const searchStr = (book!.isbn! + book!.bookName! + book!.company! + book!.price! + book!.genreCode!)
                         .toLowerCase();
                     return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
                 });

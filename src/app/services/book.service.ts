@@ -36,8 +36,8 @@ export class BookService {
       });
   }
 
-  get(id: string): Observable<Book> {
-    return this.http.get(`${baseUrl}/${id}`);
+  get(isbn: string): Observable<any> {
+    return this.http.get(`${baseUrl}/${isbn}`);
   }
 
   create(data: any): Observable<any> {
@@ -45,10 +45,12 @@ export class BookService {
   }
 
   update(isbn: any, data: any): Observable<any> {
+    console.log("update" + isbn);
     return this.http.put(`${baseUrl}/${isbn}`, data);
   }
 
   delete(isbn: any): Observable<any> {
+    console.log("delete" + isbn);
     return this.http.delete(`${baseUrl}/${isbn}`);
   }
 

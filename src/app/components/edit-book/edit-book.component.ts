@@ -37,6 +37,7 @@ export class EditBookComponent implements OnInit {
   }
 
   stopEdit(): void {
+    console.log("stopEdit()" + this.data.isbn);
     this.bookService.update(this.data.isbn, this.data);
   }
 

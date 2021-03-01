@@ -82,7 +82,7 @@ export class BookListComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result === 1) {
         const foundIndex =
-          this.exampleDatabase!.dataChange.value.findIndex(x => x.isbn === this.isbn);
+          this.exampleDatabase!.dataChange.value.findIndex(x => x.isbn! === this.isbn!);
         this.exampleDatabase!.dataChange.value[foundIndex] =
           this.bookService.getDialogData();
         this.refreshTable();
