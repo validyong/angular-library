@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ComponentFactory, ElementRef, OnInit, ViewChild } from '@angular/core';
 
 import { DataSource } from '@angular/cdk/collections';
+import { HttpClient } from '@angular/common/http';
 
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -12,6 +13,7 @@ import { AddBookComponent } from '../add-book/add-book.component';
 import { EditBookComponent } from '../edit-book/edit-book.component';
 import { DeleteBookComponent } from '../delete-book/delete-book.component';
 import { ExampleDataSource } from 'src/app/models/example-data-source';
+import { fromEvent } from 'rxjs';
 
 @Component({
   selector: 'app-book-list',
@@ -24,20 +26,103 @@ export class BookListComponent implements OnInit {
   currentIndex = -1;
   bookName = '';
 
-  displayedColumns = ['isbn', 'bookName', 'company', 'price', 'genreCode'];
+  displayedColumns = ['isbn', 'bookName', 'company', 'price', 'genreCode', 'actions'];
   exampleDatabase!: BookService | null;
   dataSource!: ExampleDataSource | null;
   index!: number;
   isbn!: string;
 
-  constructor(private bookService: BookService) { }
+  constructor(
+    public httpClient: HttpClient,
+    public bookService: BookService,
+    public dialogService: MatDialog) { }
+
+  @ViewChild(MatPaginator, { static: true })
+  paginator!: MatPaginator;
+  @ViewChild(MatSort, { static: true })
+  sort!: MatSort;
+  @ViewChild('filter', { static: true })
+  filter!: ElementRef;
 
   ngOnInit(): void {
-    this.retrieveBooks();
+    this.loadData();
   }
 
   rerload() {
-    this.retrieveBooks();
+    this.loadData();
+  }
+
+  openAddDialog() {
+    const dialogRef = this.dialogService.open(AddBookComponent, {
+      data: { book: {} }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == 1) {
+        this.exampleDatabase?.dataChange.value.push
+          (this.bookService.getDialogData());
+        this.refreshTable();
+      }
+    });
+  }
+
+  startEdit(i: number, isbn: string, bookName: string, company: string,
+    price: number, genreCode: number) {
+    this.isbn = isbn;
+
+    this.index = i;
+    console.log(this.index);
+    const dialogRef = this.dialogService.open(EditBookComponent, {
+      data: {
+        isbn: isbn, bookName: bookName, company: company,
+        price: price, genreCode: genreCode
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 1) {
+        const foundIndex =
+          this.exampleDatabase!.dataChange.value.findIndex(x => x.isbn === this.isbn);
+        this.exampleDatabase!.dataChange.value[foundIndex] =
+          this.bookService.getDialogData();
+        this.refreshTable();
+      }
+    });
+  }
+
+  deleteItem(i: number, isbn: string, bookName: string, company: string,
+    price: number, genreCode: number) {
+    this.index = i;
+    this.isbn = isbn;
+    const dialogRef = this.dialogService.open(DeleteBookComponent, {
+      data: { isbn: isbn, bookName: bookName, company: company, price: price, genreCode: genreCode }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 1) {
+        const foundIndex =
+          this.exampleDatabase?.dataChange.value.findIndex(x => x.isbn === this.isbn);
+        this.exampleDatabase?.dataChange.value.splice(foundIndex!, 1);
+        this.refreshTable();
+      }
+    });
+  }
+
+  private refreshTable() {
+    this.paginator._changePageSize(this.paginator.pageSize);
+  }
+
+  public loadData() {
+    this.exampleDatabase = new BookService(this.httpClient);
+    this.dataSource = new ExampleDataSource(this.exampleDatabase,
+      this.paginator, this.sort);
+    fromEvent(this.filter.nativeElement, 'keyup')
+      .subscribe(() => {
+        if (!this.dataSource) {
+          return;
+        }
+        this.dataSource.filter = this.filter.nativeElement.value;
+      });
   }
 
   retrieveBooks(): void {

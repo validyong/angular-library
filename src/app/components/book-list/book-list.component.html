@@ -1,69 +1,89 @@
-<div class="form">
-    <mat-form-field floatPlaceholder="never" color="accent">
-        <input matInput #filter placeholder="Filter book">
-    </mat-form-field>
-</div>
+<div class="container mat-elevation-z8">
 
-<mat-table #table [dataSource]="dataSource!" matSort class="mat-cell">
+    <div class="form">
+        <mat-form-field floatPlaceholder="never" color="accent">
+            <input matInput #filter placeholder="Filter book">
+        </mat-form-field>
+    </div>
 
-</mat-table>
+    <mat-table #table [dataSource]="dataSource!" matSort class="mat-cell">
+        ng updatae @angular/cli @angular/ng-container
 
-<div class="list row">
-    <div class="col-md-8">
-        <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Search by Book Name" [(ngModel)]="bookName" />
-            <div class="input-group-append">
-                <button class="btn btn-outline-secondary" type="button" (click)="searchBookName()">
-                    Search
+        <ng-container matColumnDef="isbn">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                ISBN
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+                {{row.isbn}}
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="bookName">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                Book Name
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+                {{row.bookName}}
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="company">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                Company
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+                {{row.company}}
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="price">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                Price
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+                {{row.price}}
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="genreCode">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                Genre Code
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+                {{row.genreCode}}
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef>
+                <button mat-icon-button color="primary" (click)="openAddDialog()">
+                    <mat-icon aria-label="Example icon-button with a heart icon">
+                        add
+                    </mat-icon>
                 </button>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <h4>Books List</h4>
-        <ul class="list-group">
-            <li class="list-group-item" *ngFor="let book of books; let i = index" [class.active]="i == currentIndex"
-                (click)="setActiveBook(book, i)">
-                {{ book.bookName }}
-            </li>
-        </ul>
+            </mat-header-cell>
 
-        <button class="m-3 btn btn-sm btn-danger" (click)="removeAllBooks()">
-            Remove All
-        </button>
-    </div>
-    <div class="col-md-6">
-        <div *ngIf="currentBook">
-            <h4>Book</h4>
-            <div>
-                <label><strong>ISBN:</strong></label>
-                {{ currentBook.isbn }}
-            </div>
-            <div>
-                <label><strong>Book Name:</strong></label>
-                {{ currentBook.bookName }}
-            </div>
-            <div>
-                <label><strong>Company:</strong></label>
-                {{ currentBook.company }}
-            </div>
-            <div>
-                <label><strong>Price:</strong></label>
-                {{ currentBook.price }}
-            </div>
-            <div>
-                <label><strong>Genre Code:</strong></label>
-                {{ currentBook.genreCode }}
-            </div>
+            <mat-cell *matCellDef="let row; let i=index;">
+                <button mat-icon-button color="accent"
+                    (click)="startEdit(i, row.isbn, row.bookName, row.company, row.price, row.genreCode)">
+                    <mat-icon aria-label="Edit">edit</mat-icon>
+                </button>
+                <button mat-icon-button color="accent"
+                    (click)="deleteItem(i, row.isbn, row.bookName, row.company, row.price, row.genreCode)">
+                    <mat-icon aria-label="Delete">delete</mat-icon>
+                </button>
+            </mat-cell>
 
-            <a class="badge badge-warning" routerLink="/books/{{ currentBook.isbn }}">
-                Edit
-            </a>
-        </div>
+        </ng-container>
 
-        <div *ngIf="!currentBook">
-            <br />
-            <p> click on a Book</p>
-        </div>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+
+    <div class="no-results" [style.display]="dataSource!.renderedData?.length == 0 ? '' : 'none'">
+        No results
     </div>
+
+    <mat-paginator #paginator [length]="dataSource!.filteredData?.length" [pageIndex]="0" [pageSize]="10"
+        [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
 </div>

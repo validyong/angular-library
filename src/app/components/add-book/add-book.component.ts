@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
+
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+
 import { Book } from 'src/app/models/book.model';
 import { BookService } from 'src/app/services/book.service';
 
@@ -17,7 +21,32 @@ export class AddBookComponent implements OnInit {
   };
   submitted = false;
 
-  constructor(private bookService: BookService) { }
+  constructor(
+    public dialogRef: MatDialogRef<AddBookComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: Book,
+    public bookService: BookService) { }
+
+  formControl = new FormControl('', [
+    Validators.required
+  ]);
+
+  getErrorMessage() {
+    return this.formControl.hasError('required') ? 'Required field'
+      : this.formControl.hasError('email') ? 'Not a valid email'
+        : '';
+  }
+
+  submit() {
+
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  public confirmAdd(): void {
+    this.bookService.create(this.data);
+  }
 
   ngOnInit(): void {
   }

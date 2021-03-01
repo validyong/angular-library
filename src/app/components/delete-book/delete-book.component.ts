@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { BookService } from 'src/app/services/book.service';
 
@@ -9,8 +9,19 @@ import { BookService } from 'src/app/services/book.service';
 })
 export class DeleteBookComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public dialogRef: MatDialogRef<DeleteBookComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    public bookService: BookService) { }
 
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  confirmDelete(): void {
+    this.bookService.delete(this.data.isbn);
+  }
+  
   ngOnInit(): void {
   }
 
