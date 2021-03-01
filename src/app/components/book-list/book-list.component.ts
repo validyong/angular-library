@@ -58,7 +58,7 @@ export class BookListComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result == 1) {
+      if (result === 1) {
         this.exampleDatabase?.dataChange.value.push
           (this.bookService.getDialogData());
         this.refreshTable();

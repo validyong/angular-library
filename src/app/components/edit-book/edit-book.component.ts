@@ -22,7 +22,7 @@ export class EditBookComponent implements OnInit {
     Validators.required
   ]);
 
-  getErroMessage() {
+  getErrorMessage() {
     return this.formControl.hasError('required') ? 'Required field'
       : this.formControl.hasError('email') ? 'Not a valid email'
         : '';

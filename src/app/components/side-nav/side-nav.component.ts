@@ -13,12 +13,17 @@ export class SideNavComponent implements OnInit {
 
   @Input() sidenavLayout: any;
 
-  constructor(private sideNavService: SideNavService) { }
+  constructor(private sideNavService: SideNavService) {
+  }
 
   ngOnInit() {
-    this.sideNavService.sideNavToggleSubject.subscribe(() => {
-      this.sidenav.toggle();
-    });
+    // this.sideNavService.sideNavToggleSubject.subscribe(() => {
+    //   this.sidenav.toggle();
+    // });
+  }
+
+  toggleSidenav() {
+    this.sidenav.toggle();
   }
 
 }

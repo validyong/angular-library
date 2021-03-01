@@ -1,72 +1,42 @@
-<div>
-    <div class="submit-form">
-        <div *ngIf="!submitted">
-            <div class="form-group">
-                <label for="isbn">ISBN</label>
-                <input
-                    type="text"
-                    class="form-control"
-                    id="isbn"
-                    required
-                    [(ngModel)]="book.isbn"
-                    name="isbn"
-                />
-            </div>
+<div class="container">
+    <h3 mat-dialog-title>Add new Book</h3>
+    
+    <form class="mat-dialog-content" (ngSubmit)="submit" #formControl="ngForm">
 
-            <div class="form-group">
-                <label for="bookName">Book Name</label>
-                <input
-                    type="text"
-                    class="form-control"
-                    id="bookName"
-                    required
-                    [(ngModel)]="book.bookName"
-                    name="bookName"
-                />
-            </div>
-
-            <div class="form-group">
-                <label for="company">Company</label>
-                <input
-                    type="text"
-                    class="form-control"
-                    id="company"
-                    required
-                    [(ngModel)]="book.company"
-                    name="company"
-                />
-            </div>
-
-            <div class="form-group">
-                <label for="price">price</label>
-                <input
-                    type="number"
-                    class="form-control"
-                    id="price"
-                    required
-                    [(ngModel)]="book.price"
-                    name="price"
-                />
-            </div>
-
-            <div class="form-group">
-                <label for="genreCode">Genre Code</label>
-                <input
-                    type="number"
-                    class="form-control"
-                    id="genreCode"
-                    required
-                    [(ngModel)]="book.genreCode"
-                    name="genreCode"
-                />
-            </div>
-
-            <button (click)="saveBook()" class="btn btn-success">Submit</button>
+        <div class="form">
+            <mat-form-field color="accent">
+                <input matInput #input class="from-control" placeholder="ISBN" [(ngModel)]="data.isbn" name="isbn" required>
+                <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+            </mat-form-field>
         </div>
 
-        <div *ngIf="submitted">
-            <h4>Book was submitted successfully!</h4>
-            <button class="btn btn-success" (click)="newBook()">Add</button>
+        <div class="form">
+            <mat-form-field color="accent">
+                <input matInput #input class="form-control" placeholder="Book Name" [(ngModel)]="data.bookName" name="bookName" required>
+            </mat-form-field>
         </div>
-    </div>
+
+        <div class="form">
+            <mat-form-field color="accent">
+                <input matInput #input class="form-control" placeholder="Company" [(ngModel)]="data.company" name="company" required>
+            </mat-form-field>
+        </div>
+
+        <div class="form">
+            <mat-form-field color="accent">
+                <input matInput #input class="form-control" placeholder="Price" [(ngModel)]="data.price" name="price" required>
+            </mat-form-field>
+        </div>
+
+        <div class="form">
+            <mat-form-field color="accent">
+                <input matInput #input class="form-control" placeholder="Genre Code" [(ngModel)]="data.genreCode" name="genreCode" required>
+            </mat-form-field>
+        </div>
+
+        <div mat-dialog-actions>
+            <button mat-button (type)="submit()" [disabled]="!formControl.valid" [mat-dialog-close]="1" (click)="confirmAdd()">Save</button>
+            <button mat-button (click)="onNoClick()" tabindex="-1">Cancel</button>
+        </div>
+    </form>
 </div>
