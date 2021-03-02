@@ -41,11 +41,14 @@ export class BookService {
   }
 
   create(data: any): Observable<any> {
+    console.log("create:");
+    this.dialogData = data;
     return this.http.post(baseUrl, data);
   }
 
   update(isbn: any, data: any): Observable<any> {
     console.log("update" + isbn);
+    this.dialogData = data;
     return this.http.put(`${baseUrl}/${isbn}`, data);
   }
 

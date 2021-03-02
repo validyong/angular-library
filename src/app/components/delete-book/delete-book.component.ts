@@ -19,7 +19,8 @@ export class DeleteBookComponent implements OnInit {
   }
 
   confirmDelete(): void {
-    this.bookService.delete(this.data.isbn);
+    this.bookService.delete(this.data.isbn)
+    .subscribe();
   }
   
   ngOnInit(): void {

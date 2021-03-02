@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Book } from 'src/app/models/book.model';
 
 import { BookService } from 'src/app/services/book.service';
 
@@ -11,6 +12,14 @@ import { BookService } from 'src/app/services/book.service';
   styleUrls: ['./edit-book.component.sass']
 })
 export class EditBookComponent implements OnInit {
+  currentBook: Book = {
+    isbn: '',
+    bookName: '',
+    company: '',
+    price: 0,
+    genreCode: 0
+  };
+  message = '';
 
   constructor(
     public dialogRef: MatDialogRef<EditBookComponent>,
@@ -37,8 +46,18 @@ export class EditBookComponent implements OnInit {
   }
 
   stopEdit(): void {
+    this.currentBook = this.data;
     console.log("stopEdit()" + this.data.isbn);
-    this.bookService.update(this.data.isbn, this.data);
+    this.bookService.update(this.currentBook.isbn, this.currentBook)
+    .subscribe(
+      response => {
+        console.log(response);
+        this.message = response.message;
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 
   ngOnInit(): void {

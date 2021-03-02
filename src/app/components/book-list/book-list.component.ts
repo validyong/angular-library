@@ -58,6 +58,7 @@ export class BookListComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      console.log("afterClosed AddDialog");
       if (result === 1) {
         this.exampleDatabase?.dataChange.value.push
           (this.bookService.getDialogData());
@@ -80,9 +81,11 @@ export class BookListComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      console.log("afterClosed EditDialog");
+
       if (result === 1) {
         const foundIndex =
-          this.exampleDatabase!.dataChange.value.findIndex(x => x.isbn! === this.isbn!);
+          this.exampleDatabase!.dataChange.value.findIndex((x: Book) => x.isbn === this.isbn);
         this.exampleDatabase!.dataChange.value[foundIndex] =
           this.bookService.getDialogData();
         this.refreshTable();
@@ -99,6 +102,8 @@ export class BookListComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      console.log("afterClosed DeleteDialog");
+
       if (result === 1) {
         const foundIndex =
           this.exampleDatabase?.dataChange.value.findIndex(x => x.isbn === this.isbn);

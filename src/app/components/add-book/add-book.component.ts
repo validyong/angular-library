@@ -5,13 +5,14 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 import { Book } from 'src/app/models/book.model';
 import { BookService } from 'src/app/services/book.service';
+import { BookListComponent } from '../book-list/book-list.component';
 
 @Component({
   selector: 'app-add-book',
   templateUrl: './add-book.component.html',
   styleUrls: ['./add-book.component.sass']
 })
-export class AddBookComponent implements OnInit {
+export class AddBookComponent{
   book: Book = {
     isbn: '',
     bookName: '',
@@ -45,10 +46,8 @@ export class AddBookComponent implements OnInit {
   }
 
   public confirmAdd(): void {
-    this.bookService.create(this.data);
-  }
-
-  ngOnInit(): void {
+    this.bookService.create(this.data)
+    .subscribe();
   }
 
   saveBook(): void {
